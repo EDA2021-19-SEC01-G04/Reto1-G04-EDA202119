@@ -37,9 +37,80 @@ los mismos.
 
 # Construccion de modelos
 
+def newCatalog(listType: int):
+    """
+    Inicializa el catálogo de videos. Crea una lista vacia para guardar
+    todos los videos, adicionalmente, crea una lista vacia para el titulo del video,
+    una lista vacia para el canal que lo creó, una lista vacia para la fecha de tendencia, 
+    una lista vacia para el país, una lista vacia para la cantidad de vistas y una lista vacia para
+    la cantidad de likes y dislikes. Finalmente, crea una lista de las categorías mostrando su id y su nombre.
+    Retorna el catalogo inicializado. 
+    """
+    catalog = {'videos': None,
+               'title': None,
+               'cannel_title': None,
+               'trending_date': None,
+               'country': None,
+               'views': None,
+               'likes': None,
+               'dislikes': None}          
+
+    if listType == 1:
+
+        eda = 'ARRAY_LIST'
+
+    elif listType == 2:
+
+         eda = 'LINKED_LIST'
+        
+    catalog['videos'] = lt.newList()
+    
+    catalog['title'] = lt.newList(eda)
+
+    catalog['cannel_title'] = lt.newList(eda)
+
+    catalog['trending_date'] = lt.newList(eda)
+
+    catalog['country'] = lt.newList(eda)
+
+    catalog['views'] = lt.newList(eda)
+
+    catalog['likes'] = lt.newList(eda)
+
+    catalog['dislikes'] = lt.newList(eda)
+    
+    return catalog
+
 # Funciones para agregar informacion al catalogo
 
+def addVideo (catalog, video):
+    lt.addLast(catalog['videos'], video)
+
+    """
+    authors = book['authors'].split(",")
+
+    for author in authors:
+        addBookAuthor(catalog, author.strip(), book)
+        """
+def addTitle(catalog, title):
+    """
+    Adiciona un titulo a la lista de tags
+    """
+    t = newTitle(title['tag_id'], title['goodreads_book_id'])
+    lt.addLast(catalog['book_tags'], t)
+
+
+        
+
 # Funciones para creacion de datos
+
+def newTitle(title, videos):
+    """
+    Esta estructura crea una relación entre un titulo y
+    los videos que han sido marcados con dicho titulo.
+    """
+    titulo = {'title': title, 'videos': videos}
+    return titulo
 
 # Funciones de consulta
 
