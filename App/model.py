@@ -28,8 +28,11 @@
 import config as cf
 from DISClib.ADT import list as lt
 from DISClib.Algorithms.Sorting import shellsort as sa
-assert cf
+from DISClib.Algorithms.Sorting import selectionsort as sb
+from DISClib.Algorithms.Sorting import insertionsort as sc
 
+assert cf
+import time 
 """
 Se define la estructura de un catálogo de videos. El catálogo tendrá dos listas, una para los videos, otra para las categorias de
 los mismos.
@@ -46,74 +49,66 @@ def newCatalog(listType: int):
     la cantidad de likes y dislikes. Finalmente, crea una lista de las categorías mostrando su id y su nombre.
     Retorna el catalogo inicializado. 
     """
-    catalog = {'videos': None,
-               'title': None,
-               'cannel_title': None,
-               'trending_date': None,
-               'country': None,
-               'views': None,
-               'likes': None,
-               'dislikes': None}          
+    catalog = {'videos': None}        
 
     if listType == 1:
-
         eda = 'ARRAY_LIST'
 
     elif listType == 2:
-
-         eda = 'LINKED_LIST'
+        eda = 'LINKED_LIST'
         
-    catalog['videos'] = lt.newList()
-    
-    catalog['title'] = lt.newList(eda)
-
-    catalog['cannel_title'] = lt.newList(eda)
-
-    catalog['trending_date'] = lt.newList(eda)
-
-    catalog['country'] = lt.newList(eda)
-
-    catalog['views'] = lt.newList(eda)
-
-    catalog['likes'] = lt.newList(eda)
-
-    catalog['dislikes'] = lt.newList(eda)
+    catalog['videos'] = lt.newList(datastructure=eda)
     
     return catalog
 
 # Funciones para agregar informacion al catalogo
 
-def addVideo (catalog, video):
+def addVideo(catalog, video):
+    # Se adiciona el video a la lista de videos
     lt.addLast(catalog['videos'], video)
 
     """
+    #TODO
+    # Se obtienen las categorias del video
     authors = book['authors'].split(",")
-
+    # Cada autor, se crea en la lista de libros del catalogo, y se
+    # crea un libro en la lista de dicho autor (apuntador al libro)
     for author in authors:
         addBookAuthor(catalog, author.strip(), book)
         """
-def addTitle(catalog, title):
-    """
-    Adiciona un titulo a la lista de tags
-    """
-    t = newTitle(title['tag_id'], title['goodreads_book_id'])
-    lt.addLast(catalog['book_tags'], t)
-
-
-        
 
 # Funciones para creacion de datos
-
-def newTitle(title, videos):
-    """
-    Esta estructura crea una relación entre un titulo y
-    los videos que han sido marcados con dicho titulo.
-    """
-    titulo = {'title': title, 'videos': videos}
-    return titulo
 
 # Funciones de consulta
 
 # Funciones utilizadas para comparar elementos dentro de una lista
 
+def cmpVideosByLikes(video1, video2):
+    """
+    Devuelve verdadero (True) si los likes de video1 son menores que los del video2
+    Args:
+    video1: informacion del primer video que incluye su valor 'likes'
+    video2: informacion del segundo video que incluye su valor 'likes'
+    """
+    return (int(video1['likes']) < int(video2['likes']))
+
 # Funciones de ordenamiento
+
+def sortVideos(catalog, size, tisa):
+
+    sub_list = lt.subList(catalog['videos'], 1, size)
+    sub_list = sub_list.copy()
+    start_time = time.process_time()
+
+    if tisa == 1: 
+        sorted_list = sb.sort(sub_list, cmpVideosByLikes)
+    elif tisa == 2:
+        sorted_list = sc.sort(sub_list, cmpVideosByLikes)
+    else:
+        sorted_list = sa.sort(sub_list, cmpVideosByLikes)
+
+    stop_time = time.process_time()
+    elapsed_time_mseg = (stop_time - start_time)*1000
+
+    return elapsed_time_mseg, sorted_list
+

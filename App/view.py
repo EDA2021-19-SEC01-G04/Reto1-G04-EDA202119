@@ -25,6 +25,9 @@ import sys
 import controller
 from DISClib.ADT import list as lt
 assert cf
+from DISClib.Algorithms.Sorting import shellsort as sa
+from DISClib.Algorithms.Sorting import selectionsort as sb
+from DISClib.Algorithms.Sorting import insertionsort as sc
 
 
 """
@@ -37,7 +40,13 @@ operación solicitada
 def printMenu():
     print("Bienvenido")
     print("1- Cargar información en el catálogo")
-    print("2- ")
+    print("2- Ordenar libros por likes")
+
+def loadData(catalog):
+    """
+    Carga los libros en la estructura de datos
+    """
+    controller.loadData(catalog)
 
 catalog = None
 
@@ -48,10 +57,29 @@ while True:
     printMenu()
     inputs = input('Seleccione una opción para continuar\n')
     if int(inputs[0]) == 1:
+        
+        print("Seleccione la opción con el tipo de lista que desea para cargar el catálogo de videos: ")
+        print("1. Array List ")
+        print("2. Linked List ")
+        listType = int(input("Elección: "))
+        catalog = controller.initCatalog(listType)
         print("Cargando información de los archivos ....")
+        loadData(catalog)
+        print("El total de registro de videos cargados es: " +str(lt.size(catalog['videos'])))
+
 
     elif int(inputs[0]) == 2:
-        pass
+        print("Seleccione la opción con el tipo de algoritmo de ordenamiento iterativo con el cual organizar los datos: ")
+        print("1- Selection")
+        print("2- insertion")
+        print("3- shell")
+        tisa = input("Elección: ")
+        size = int(input("Indique tamaño de la muestra: "))
+        result = controller.sortVideos(catalog, int(size), int(tisa))
+        print("Para la muestra de", size, " elementos, el tiempo (mseg) es: ",
+                                          str(result[0]))
+        
+
 
     else:
         sys.exit(0)
