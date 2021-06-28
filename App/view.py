@@ -28,6 +28,8 @@ assert cf
 from DISClib.Algorithms.Sorting import shellsort as sa
 from DISClib.Algorithms.Sorting import selectionsort as sb
 from DISClib.Algorithms.Sorting import insertionsort as sc
+from DISClib.Algorithms.Sorting import quicksort as sd
+from DISClib.Algorithms.Sorting import mergesort as se
 
 
 """
@@ -36,6 +38,8 @@ Presenta el menu de opciones y por cada seleccion
 se hace la solicitud al controlador para ejecutar la
 operación solicitada
 """
+default_limit = 1000
+sys.setrecursionlimit(default_limit*1000000)
 
 def printMenu():
     print("Bienvenido")
@@ -69,10 +73,12 @@ while True:
 
 
     elif int(inputs[0]) == 2:
-        print("Seleccione la opción con el tipo de algoritmo de ordenamiento iterativo con el cual organizar los datos: ")
+        print("Seleccione la opción con el tipo de algoritmo de ordenamiento con el cual organizar los datos: ")
         print("1- Selection")
         print("2- insertion")
         print("3- shell")
+        print("4- Quick")
+        print("5- Merge")
         tisa = input("Elección: ")
         size = int(input("Indique tamaño de la muestra: "))
         result = controller.sortVideos(catalog, int(size), int(tisa))

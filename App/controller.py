@@ -26,6 +26,8 @@ import csv
 from DISClib.Algorithms.Sorting import shellsort as sa
 from DISClib.Algorithms.Sorting import selectionsort as sb
 from DISClib.Algorithms.Sorting import insertionsort as sc
+from DISClib.Algorithms.Sorting import quicksort as sd
+from DISClib.Algorithms.Sorting import mergesort as se
 
 
 """

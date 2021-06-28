@@ -30,6 +30,8 @@ from DISClib.ADT import list as lt
 from DISClib.Algorithms.Sorting import shellsort as sa
 from DISClib.Algorithms.Sorting import selectionsort as sb
 from DISClib.Algorithms.Sorting import insertionsort as sc
+from DISClib.Algorithms.Sorting import quicksort as sd
+from DISClib.Algorithms.Sorting import mergesort as se
 
 assert cf
 import time 
@@ -104,8 +106,12 @@ def sortVideos(catalog, size, tisa):
         sorted_list = sb.sort(sub_list, cmpVideosByLikes)
     elif tisa == 2:
         sorted_list = sc.sort(sub_list, cmpVideosByLikes)
-    else:
+    elif tisa == 3:
         sorted_list = sa.sort(sub_list, cmpVideosByLikes)
+    elif tisa == 4:
+        sorted_list = sd.sort(sub_list, cmpVideosByLikes)
+    elif tisa == 5:
+        sorted_list = se.sort(sub_list, cmpVideosByLikes)
 
     stop_time = time.process_time()
     elapsed_time_mseg = (stop_time - start_time)*1000
