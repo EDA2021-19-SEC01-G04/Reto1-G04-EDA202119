@@ -51,17 +51,25 @@ def loadData(catalog):
     estructura de datos
     """
     loadVideos(catalog)
-
+    loadCategories(catalog)
 
 
 def loadVideos(catalog):
     """
     Carga los videos del archivo.  
     """
-    videosFile = cf.data_dir + 'videos-large.csv'
+    videosFile = cf.data_dir + 'videos-small.csv'
     input_file = csv.DictReader(open(videosFile, encoding='utf-8'))
     for video in input_file:
         model.addVideo(catalog, video)
+
+def loadCategories(catalog):
+    
+    categoriesfile = cf.data_dir + 'category-id.csv'
+    input_file = csv.DictReader(open(categoriesfile, encoding='utf-8'))
+    for category in input_file:
+        model.addCategory(catalog, category) 
+
 
 # Funciones de ordenamiento
 
@@ -72,3 +80,34 @@ def sortVideos(catalog, size, tisa):
     return model.sortVideos(catalog, size, tisa)
 
 # Funciones de consulta sobre el catálogo
+
+def getBestVideos(catalog, number, category_name, country):
+    
+    category = model.getCategoryByName(catalog, category_name)
+    top = model.getBestVideos(catalog, number, category["id"], country)
+
+    return top
+
+def getMostTrendingVideoByCountry(catalog, pais):
+    filteredVideos = model.filterByCountry(catalog, pais)
+    filteredVideos = model.filterByRatioLikesDislikes(filteredVideos, 10)
+
+
+    return model.getMostTrendingVideo(filteredVideos)
+
+def getMostTrendingVideoByCategory (catalog, category):
+
+    category = model.getCategoryByName(catalog, category)
+
+    filteredVideos = model.filterByCategory(catalog, category['id'])
+    filteredVideos = model.filterByRatioLikesDislikes(filteredVideos, 20)
+
+
+    return model.getMostTrendingVideo(filteredVideos)
+
+def getMostComentedVideosByCountryTag(catalog, pais, tag, num):
+
+    top = model.getMostCommentedVideos(catalog, pais, tag, num)
+
+    return top
+
